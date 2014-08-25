@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Submissions for {{user.username}}!</h1>
+{% for file in files_uploaded %}
+<p>{{ file.name }}</b></p>
+
+{% endfor %}
+{% endblock %}
+

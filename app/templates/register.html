@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+  <form action="{{ url_for('register') }}" method=post class="form-horizontal">
+    {{form.hidden_tag()}}
+    <h2>Sign up for MSDN@USF Programming Competition </h2>
+    <div class="control-group">
+        <div class="controls">
+          Username: {{form.username(size=30)}}<br>
+          {% for error in form.errors.username %}
+          <span style="color: red;">[{{error}}]</span>
+          {% endfor %}<br>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+          Password: {{form.password(size=30)}}<br>
+          {% for error in form.errors.password %}
+          <span style="color: red;">[{{error}}]</span>
+          {% endfor %}<br>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+          Confirm Password: {{form.confirm(size=30)}}<br>
+          {% for error in form.errors.confirm %}
+          <span style="color: red;">[{{error}}]</span>
+          {% endfor %}<br>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-success">Signup</button>
+        </div>
+    </div>
+  </form>
+{% endblock %}
