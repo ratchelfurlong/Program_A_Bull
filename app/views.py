@@ -16,18 +16,21 @@ def load_user(id):
 @app.route('/')
 @app.route('/register' , methods=['GET','POST'])
 def register():
+    # if user is logged in, redirect them to index
     if g.user is not None and g.user.is_authenticated():
         return redirect(url_for('index'))
     form = RegisterForm(request.form)
-    if request.method == 'POST':
-        if form.validate() == False:
-            return render_template('register.html', form = form)
-        else:
-            user = User(request.form['username'] , request.form['password'])
+    # tries to register user
+    if form.validate_on_submit():
+        new_user = User.query.filter_by(username=form.username.data).first()
+        if new_user is None:
+            user = User(form.username.data, form.password.data)
             db.session.add(user)
             db.session.commit()
             flash('User successfully registered')
             return redirect(url_for('login'))
+        else:
+            form.username.errors.append('That username is already taken!')
     return render_template('register.html', form = form)
 
 
@@ -43,9 +46,11 @@ def index():
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
+    # if user is logged in, redirect them to index
     if g.user is not None and g.user.is_authenticated():
         return redirect(url_for('index'))
     form = LoginForm(request.form)
+    # tries to login user
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
