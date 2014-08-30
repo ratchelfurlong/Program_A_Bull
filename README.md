@@ -12,9 +12,8 @@ GOAL (remaining):
 My attempt at explaining how to run this:
 =========================================
 
-+Python 3
-
-+I would recommend you use a virtual env (I use Anaconda-python "conda" virtual envs)
+- Python 3
+- I would recommend you use a virtual env (I use Anaconda-python "conda" virtual envs)
 
 1) Clone this repository
 
