@@ -19,6 +19,7 @@ My attempt at explaining how to run this:
 + I would recommend you use a virtual env (I use Anaconda-python "conda" virtual envs)
 
 1) Clone this repository
+
 2) Download python packages:
 	- pip install flask
 	- pip install flask-login
@@ -27,6 +28,9 @@ My attempt at explaining how to run this:
 	- pip install sqlalchemy-migrate
 
 3) Navigate via command-line to <your-file-path>/file_upload_app 
+
 4) > python db_create.py
+
 5) > python run.py
+
 6) go to localhost:5000 to test it
