@@ -13,6 +13,7 @@ class User(db.Model):
     def __init__(self, username, password):
         self.username = username
         self.set_password(password)
+        self.uploaded_files = []
 
     def set_password(self, password):
         self.pwd_hash = generate_password_hash(password)

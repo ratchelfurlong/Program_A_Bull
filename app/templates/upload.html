@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="well">
+    <h3>Upload Solution:</h3>
+    <form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        <div class="input-group">
+            <div class="input-group-btn">
+                <span class="btn btn-default btn-file form-control">
+                	Choose File...<input type="file" name=file>
+                </span>
+                <input class="btn btn-primary form-control" type="submit" value="Upload">
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

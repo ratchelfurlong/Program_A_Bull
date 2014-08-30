@@ -3,6 +3,16 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 from app import app, db, login_manager
 from app.forms import LoginForm, RegisterForm
 from app.models import User, ROLE_USER, ROLE_ADMIN
+from config import ALLOWED_EXTENSIONS, UPLOAD_FOLDER
+from werkzeug import secure_filename
+import os
+import errno
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# checks if file is of proper type
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 # sets current user from flask-login to g.user
 @app.before_request
@@ -19,12 +29,18 @@ def register():
     # if user is logged in, redirect them to index
     if g.user is not None and g.user.is_authenticated():
         return redirect(url_for('index'))
-    form = RegisterForm(request.form)
+    form = RegisterForm()
     # tries to register user
     if form.validate_on_submit():
         new_user = User.query.filter_by(username=form.username.data).first()
         if new_user is None:
             user = User(form.username.data, form.password.data)
+
+            # makes directory to store files on 
+            directory = os.path.join(app.config['UPLOAD_FOLDER'], form.username.data)
+            if not os.path.exists(directory):
+                os.makedirs(directory) 
+
             db.session.add(user)
             db.session.commit()
             flash('User successfully registered')
@@ -34,22 +50,20 @@ def register():
     return render_template('register.html', form = form)
 
 
-@app.route('/index')
+@app.route('/index', methods = ['GET', 'POST'])
 @login_required
 def index():
     user = g.user
-    files_uploaded = []
     return render_template("index.html",
-        title = 'Files Uploaded',
-        user = user, 
-        files_uploaded = files_uploaded)
+        title = user.username,
+        user = user)
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     # if user is logged in, redirect them to index
     if g.user is not None and g.user.is_authenticated():
         return redirect(url_for('index'))
-    form = LoginForm(request.form)
+    form = LoginForm()
     # tries to login user
     if form.validate_on_submit():
         username = form.username.data
@@ -69,6 +83,27 @@ def login():
             flash('Username or Password is invalid', 'error')
             return redirect(url_for('login'))
     return render_template('login.html', title = 'Sign In', form = form)
+
+@app.route('/upload', methods = ['GET', 'POST'])
+def upload():
+    user = g.user
+    if request.method == 'POST':
+        submitted_file = request.files['file']
+        if submitted_file and allowed_file(submitted_file.filename):
+            filename = secure_filename(submitted_file.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], user.username, filename)
+            # tries to remove the file if it exists before creating a new one
+            try:
+                os.remove(filepath)
+            except OSError:
+                pass
+            submitted_file.save(filepath)
+            flash("File " + filename + " uploaded successfully!")
+            return redirect(url_for('index'))
+        else:
+            form.solution_file.errors.append("Please enter a valid file extension.")
+            return redirect(url_for('index'))
+    return render_template('upload.html', title = "Upload File")
 
 @app.route('/logout')
 def logout():
