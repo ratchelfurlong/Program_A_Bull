@@ -3,11 +3,8 @@ file_upload_app
 
 A simple file uploading app written in flask
 
-GOAL:
+GOAL (remaining):
 ====
-- secure user logins
-  -> no duplicate users
-- "remember_me" functionality
 - upload files to server
 - display uploaded files to user
 - allow deletion of uploaded files
@@ -15,22 +12,24 @@ GOAL:
 My attempt at explaining how to run this:
 =========================================
 
-*Python 3
-*I would recommend you use a virtual env (I use Anaconda-python "conda" virtual envs)
++Python 3
++I would recommend you use a virtual env (I use Anaconda-python "conda" virtual envs)
 
 1) Clone this repository
 
 2) Download python packages:
 
-	- pip install flask
-	- 
-	- pip install flask-login
-	- 
-	- pip install flask-wtf
-	- 
-	- pip install sqlalchemy
-	- 
-	- pip install sqlalchemy-migrate
+	> pip install flask
+	
+	> pip install flask-login
+	
+	> pip install flask-wtf
+	
+	> pip install sqlalchemy
+	 
+	> pip install sqlalchemy-migrate
+	
+	> pip install sqlite3
 
 3) Navigate via command-line to <your-file-path>/file_upload_app 
 
