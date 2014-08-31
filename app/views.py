@@ -10,18 +10,23 @@ import errno
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# checks if file is of proper type
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 # sets current user from flask-login to g.user
 @app.before_request
 def before_request():
     g.user = current_user
 
-@login_manager.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+@app.errorhandler(404)
+def internal_error(error):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    return render_template('500.html'), 500
 
 @app.route('/')
 @app.route('/register' , methods=['GET','POST'])
@@ -69,40 +74,46 @@ def login():
         username = form.username.data
         password = form.password.data
         session['remember_me'] = form.remember_me.data
-        remember_me = False
-        if 'remember_me' in session:
-            remember_me = session['remember_me']
-            session.pop('remember_me', None)
         registered_user = User.query.filter_by(username=username).first()
         if registered_user is not None:
             if registered_user.check_password(password):
+                remember_me = False
+                if 'remember_me' in session:
+                    remember_me = session['remember_me']
+                    session.pop('remember_me', None)
                 login_user(registered_user, remember = remember_me)
                 flash('Logged in successfully')
                 return redirect(request.args.get('next') or url_for('index'))
-        else:
-            flash('Username or Password is invalid', 'error')
-            return redirect(url_for('login'))
+            else:
+                flash('Invalid login. Please try again.')
+                return redirect(url_for('login'))
     return render_template('login.html', title = 'Sign In', form = form)
+
+# checks if file is of proper type
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 @app.route('/upload', methods = ['GET', 'POST'])
 def upload():
     user = g.user
     if request.method == 'POST':
         submitted_file = request.files['file']
-        if submitted_file and allowed_file(submitted_file.filename):
-            filename = secure_filename(submitted_file.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], user.username, filename)
-            # tries to remove the file if it exists before creating a new one
-            try:
-                os.remove(filepath)
-            except OSError:
-                pass
-            submitted_file.save(filepath)
-            flash("File " + filename + " uploaded successfully!")
-            return redirect(url_for('index'))
-        else:
-            form.solution_file.errors.append("Please enter a valid file extension.")
-            return redirect(url_for('index'))
+        if submitted_file:
+            if allowed_file(submitted_file.filename):
+                filename = secure_filename(submitted_file.filename)
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], user.username, filename)
+                # tries to remove the file if it exists before creating a new one
+                try:
+                    os.remove(filepath)
+                except OSError:
+                    pass
+                submitted_file.save(filepath)
+                flash("File " + filename + " uploaded successfully!")
+                return redirect(url_for('index'))
+            else:
+                flash('Please select a file with a valid file extension: (.cs, .cpp, .py)')
+                return redirect(url_for('upload'))
+        return redirect(url_for('upload'))
     return render_template('upload.html', title = "Upload File")
 
 @app.route('/logout')
