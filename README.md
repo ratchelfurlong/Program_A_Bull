@@ -28,13 +28,11 @@ My attempt at explaining how to run this:
 	> pip install sqlalchemy
 	 
 	> pip install sqlalchemy-migrate
-	
-	> pip install sqlite3
 
 3) Navigate via command-line to <your-file-path>/file_upload_app 
 
-4) > python db_create.py
-
-5) > python run.py
+	> python db_create.py
+	
+	> python run.py
 
 6) go to localhost:5000 to test it
