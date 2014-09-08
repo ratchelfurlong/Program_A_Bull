@@ -7,12 +7,16 @@
         <div class="input-group">
             <div class="input-group-btn">
                 <span class="btn btn-default btn-file form-control">
-                	Choose File...<input type="file" name=file>
+                    {{ form.upload }}
                 </span>
                 <input class="btn btn-primary form-control" type="submit" value="Upload">
+                {% for error in form.errors.upload %}
+                <span class="help-inline">[{{error}}]</span><br>
+                {% endfor %}
             </div>
         </div>
     </form>
 </div>
 
 {% endblock %}
+
