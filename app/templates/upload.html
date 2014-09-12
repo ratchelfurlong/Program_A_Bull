@@ -4,16 +4,13 @@
 <div class="well">
     <h3>Upload Solution:</h3>
     <form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{form.hidden_tag()}}
         <div class="input-group">
             <div class="input-group-btn">
-                <span class="btn btn-default btn-file form-control">
-                    {{ form.upload }}
-                </span>
-                <input class="btn btn-primary form-control" type="submit" value="Upload">
-                {% for error in form.errors.upload %}
-                <span class="help-inline">[{{error}}]</span><br>
-                {% endfor %}
+                {{ form.upload }}
             </div>
+            <br>
+            <input class="btn btn-primary form-control" type="submit" value="Upload">
         </div>
     </form>
 </div>

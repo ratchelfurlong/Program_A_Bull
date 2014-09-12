@@ -1,7 +1,6 @@
 from flask.ext.wtf import Form
 from app.models import User
-from app import uploads
-from flask_wtf.file import FileField, file_allowed, file_required
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import TextField, BooleanField, SubmitField, PasswordField
 from wtforms.validators import Required, EqualTo, DataRequired, Length
 
@@ -16,4 +15,4 @@ class RegisterForm(Form):
 	confirm = PasswordField('Repeat Password')
 
 class UploadForm(Form):
-	upload = FileField("Upload your solution:", [file_required(), file_allowed(uploads, "Please submit a file with a valid extension")])
+	upload = FileField("Upload your solution:", [FileRequired(), FileAllowed(['cs','py','cpp','java'])])

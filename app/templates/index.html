@@ -2,7 +2,21 @@
 {% block content %}
 {% include 'flash.html' %}
 <div class="well">
-    <h3>Submitted Files for {{ user.username }}:</h3>
+    <h2>Problem List:</h2>
+    <div>
+		<table class="table table-striped">
+			<tr>
+				<th>Easy</th>
+				<th>Medium</th>
+				<th>Hard</th>
+			</tr>
+			<tr>
+				<td><a href="{{ url_for('upload', problem_num = 'p1') }}">Problem 1</a></td>
+				<td><a href="{{ url_for('upload', problem_num = 'p2') }}">Problem 2</a></td>
+				<td><a href="{{ url_for('upload', problem_num = 'p3') }}">Problem 3</a></td>
+			<tr>
+		</table>
+    </div>
 </div>
 {% endblock %}
 

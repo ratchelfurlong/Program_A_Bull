@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
-from app.forms import LoginForm, RegisterForm
+from app.forms import LoginForm, RegisterForm, UploadForm
 from app.models import User, ROLE_USER, ROLE_ADMIN
 from config import ALLOWED_EXTENSIONS, UPLOAD_FOLDER
 from werkzeug import secure_filename
@@ -93,28 +93,47 @@ def login():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-@app.route('/upload', methods = ['GET', 'POST'])
-def upload():
+@app.route('/upload/<problem_num>', methods = ['GET', 'POST'])
+@login_required
+def upload(problem_num):
     user = g.user
-    if request.method == 'POST':
-        submitted_file = request.files['file']
-        if submitted_file:
-            if allowed_file(submitted_file.filename):
-                filename = secure_filename(submitted_file.filename)
-                filepath = os.path.join(app.config['UPLOAD_FOLDER'], user.username, filename)
-                # tries to remove the file if it exists before creating a new one
-                try:
-                    os.remove(filepath)
-                except OSError:
-                    pass
-                submitted_file.save(filepath)
-                flash("File " + filename + " uploaded successfully!")
-                return redirect(url_for('index'))
-            else:
-                flash('Please select a file with a valid file extension: (.cs, .cpp, .py)')
-                return redirect(url_for('upload'))
-        return redirect(url_for('upload'))
-    return render_template('upload.html', title = "Upload File")
+    form = UploadForm()
+    if form.validate_on_submit():
+        filename = secure_filename(form.upload.data.filename)
+        if allowed_file(filename):
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], user.username, filename)
+            # tries to remove the file if it exists before creating a new one
+            try:
+                os.remove(filepath)
+            except OSError:
+                pass
+            form.upload.data.save(filepath)
+            flash("File " + filename + " uploaded successfully!")
+            return redirect(url_for('index'))
+        else:
+            flash('Please select a file with a valid file extension: (.cs, .cpp, .py, .java)')
+    return render_template(problem_num+'.html', title = "Problem "+problem_num[1:], form = form)
+
+@app.route('/problem1', methods = ['GET', 'POST'])
+def problem1():
+    user = g.user
+    form = UploadForm()
+    if form.validate_on_submit():
+        filename = secure_filename(form.upload.data.filename)
+        if allowed_file(filename):
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], user.username, filename)
+            # tries to remove the file if it exists before creating a new one
+            try:
+                os.remove(filepath)
+            except OSError:
+                pass
+            form.upload.data.save(filepath)
+            flash("File " + filename + " uploaded successfully!")
+            return redirect(url_for('index'))
+        else:
+            flash('Please select a file with a valid file extension: (.cs, .cpp, .py, .java)')
+    return render_template('p1.html', title = "Problem 1", form = form)
+
 
 @app.route('/logout')
 def logout():

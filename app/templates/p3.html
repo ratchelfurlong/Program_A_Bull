@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+<div class="well">
+	<h2><u>Problem 1</u></h2>
+	<div>
+		<h4>Description:</h4>
+		<p>Find the nth fibonacci number (Fibonacci(n) = Fn) where Fibonacci(0) = 0 and Fibonacci(1) = 1.</p><br>
+		<h5>Sample Input:</h5>
+		<p>5</p>
+		<p>7</p>
+		<p>1</p><br>
+		<h5>Sample Output:</h5>
+		<p>5</p>
+		<p>13</p>
+		<p>1</p><br>
+	<div>
+	<div>
+		<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+	        {{form.hidden_tag()}}
+	        <div class="input-group">
+	            <div class="input-group-btn">
+	                {{ form.upload }}
+	            </div><br>
+	            <p><input id="submit_button" type="submit" class="btn btn-success" value="Upload"></p>
+	        </div>
+	    </form>
+	</div>
+</div>
+
+{% endblock %}
