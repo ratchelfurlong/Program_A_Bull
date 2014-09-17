@@ -9,4 +9,4 @@ CSRF_ENABLED = True
 SECRET_KEY = 'msdn_club_usf'
 
 UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
-ALLOWED_EXTENSIONS = set(['cs', 'py', 'cpp'])
+ALLOWED_EXTENSIONS = set(['cs', 'py', 'cpp', 'java'])

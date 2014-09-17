@@ -15,4 +15,4 @@ class RegisterForm(Form):
 	confirm = PasswordField('Repeat Password')
 
 class UploadForm(Form):
-	upload = FileField("Upload your solution:", [FileRequired(), FileAllowed(['cs','py','cpp','java'])])
+	upload = FileField("Upload your solution:", [FileRequired()])

@@ -91,7 +91,7 @@ def login():
 
 # checks if file is of proper type
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+    return '.' in filename and filename.split('.')[-1] in ALLOWED_EXTENSIONS
 
 @app.route('/upload/<problem_num>', methods = ['GET', 'POST'])
 @login_required
@@ -100,40 +100,18 @@ def upload(problem_num):
     form = UploadForm()
     if form.validate_on_submit():
         filename = secure_filename(form.upload.data.filename)
-        if allowed_file(filename):
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], user.username, filename)
+        if form.upload.data and allowed_file(filename):
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'grading_queue', problem_num+filename[filename.rfind('.'):])
             # tries to remove the file if it exists before creating a new one
-            try:
-                os.remove(filepath)
-            except OSError:
-                pass
-            form.upload.data.save(filepath)
-            flash("File " + filename + " uploaded successfully!")
-            return redirect(url_for('index'))
+            if not os.path.isfile(filepath):
+                form.upload.data.save(filepath)
+                flash("File " + filename + " uploaded successfully!")
+                return redirect(url_for('index'))
+            else:
+                flash("Your submission is waiting to be graded. Please wait until you receive feedback to submit again.")
         else:
             flash('Please select a file with a valid file extension: (.cs, .cpp, .py, .java)')
     return render_template(problem_num+'.html', title = "Problem "+problem_num[1:], form = form)
-
-@app.route('/problem1', methods = ['GET', 'POST'])
-def problem1():
-    user = g.user
-    form = UploadForm()
-    if form.validate_on_submit():
-        filename = secure_filename(form.upload.data.filename)
-        if allowed_file(filename):
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], user.username, filename)
-            # tries to remove the file if it exists before creating a new one
-            try:
-                os.remove(filepath)
-            except OSError:
-                pass
-            form.upload.data.save(filepath)
-            flash("File " + filename + " uploaded successfully!")
-            return redirect(url_for('index'))
-        else:
-            flash('Please select a file with a valid file extension: (.cs, .cpp, .py, .java)')
-    return render_template('p1.html', title = "Problem 1", form = form)
-
 
 @app.route('/logout')
 def logout():
