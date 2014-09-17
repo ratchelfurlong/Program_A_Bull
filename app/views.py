@@ -59,6 +59,7 @@ def register():
 @login_required
 def index():
     user = g.user
+    problem_statuses = []
     return render_template("index.html",
         title = user.username,
         user = user)
@@ -101,7 +102,7 @@ def upload(problem_num):
     if form.validate_on_submit():
         filename = secure_filename(form.upload.data.filename)
         if form.upload.data and allowed_file(filename):
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'grading_queue', problem_num+filename[filename.rfind('.'):])
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'grading_queue', user.username+"_"+problem_num+filename[filename.rfind('.'):])
             # tries to remove the file if it exists before creating a new one
             if not os.path.isfile(filepath):
                 form.upload.data.save(filepath)
