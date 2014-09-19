@@ -9,6 +9,7 @@ class User(db.Model):
     username = db.Column(db.String(64), index = True, unique = True)
     pwd_hash = db.Column(db.String(64))
     role = db.Column(db.SmallInteger, default = ROLE_USER)
+    files = db.relationship('UserFile', backref = 'team', lazy = 'dynamic')
 
     def __init__(self, username, password):
         self.username = username
@@ -35,3 +36,13 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % (self.username)
+
+class UserFile(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    problem_number = db.Column(db.Integer)
+    status = db.Column(db.String(20))
+    timestamp = db.Column(db.DateTime)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return '<Problem %r>' % (self.problem_number)

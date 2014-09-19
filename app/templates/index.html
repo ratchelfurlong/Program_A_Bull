@@ -13,14 +13,30 @@
 				<th>Hard</th>
 				<th>Status</th>
 			</tr>
+			{% for i in range(10) %}
 			<tr>
-				<td><a href="{{ url_for('upload', problem_num = 'p1') }}">Problem 1</a></td>
-				<td>Not submitted</td>
-				<td><a href="{{ url_for('upload', problem_num = 'p2') }}">Problem 2</a></td>
-				<td>Not submitted</td>
-				<td><a href="{{ url_for('upload', problem_num = 'p3') }}">Problem 3</a></td>
-				<td>Not submitted</td>
-			<tr>
+				<td><a href="{{ url_for('upload', problem_num = challenges[i]) }}">
+					Problem {{ challenges[i].problem_number }}</a>
+				</td>
+				<td>
+					{{ challenges[i].status }}
+				</td>
+
+				<td><a href="{{ url_for('upload', problem_num = challenges[i+10]) }}">
+					Problem {{ challenges[i+10].problem_number }}</a>
+				</td>
+				<td>
+					{{ challenges[i+10].status }}
+				</td>
+
+				<td><a href="{{ url_for('upload', problem_num = challenges[i+20]) }}">
+					Problem {{ challenges[i+20].problem_number }}</a>
+				</td>
+				<td>
+					{{ challenges[i+20].status }}
+				</td>	
+			</tr>
+			{% endfor %}
 		</table>
     </div>
 </div>

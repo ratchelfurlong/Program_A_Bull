@@ -2,8 +2,9 @@ from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
 from app.forms import LoginForm, RegisterForm, UploadForm
-from app.models import User, ROLE_USER, ROLE_ADMIN
+from app.models import User, ROLE_USER, ROLE_ADMIN, UserFile
 from config import ALLOWED_EXTENSIONS, UPLOAD_FOLDER
+from datetime import datetime
 from werkzeug import secure_filename
 import os
 import errno
@@ -47,7 +48,18 @@ def register():
                 os.makedirs(directory) 
 
             db.session.add(user)
+
+            # creates UserFile objects to represent team submissions
+            for i in range(30):
+                user_file = UserFile(
+                    problem_number=i+1, 
+                    status="Not Submitted",
+                    timestamp = datetime.utcnow(), 
+                    team = user)
+                db.session.add(user_file)
+
             db.session.commit()
+
             flash('User successfully registered')
             return redirect(url_for('login'))
         else:
@@ -59,10 +71,11 @@ def register():
 @login_required
 def index():
     user = g.user
-    problem_statuses = []
+    prob_statuses = user.files
     return render_template("index.html",
         title = user.username,
-        user = user)
+        user = user,
+        challenges = prob_statuses)
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -86,8 +99,9 @@ def login():
                 flash('Logged in successfully')
                 return redirect(request.args.get('next') or url_for('index'))
             else:
-                flash('Invalid login. Please try again.')
-                return redirect(url_for('login'))
+                form.password.errors.append("Invalid password!")
+        else:
+            form.username.errors.append("Invalid username!")
     return render_template('login.html', title = 'Sign In', form = form)
 
 # checks if file is of proper type
@@ -102,7 +116,10 @@ def upload(problem_num):
     if form.validate_on_submit():
         filename = secure_filename(form.upload.data.filename)
         if form.upload.data and allowed_file(filename):
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'grading_queue', user.username+"_"+problem_num+filename[filename.rfind('.'):])
+            filepath = os.path.join(
+                app.config['UPLOAD_FOLDER'],
+                'grading_queue',
+                user.username+"_"+problem_num+filename[filename.rfind('.'):])
             # tries to remove the file if it exists before creating a new one
             if not os.path.isfile(filepath):
                 form.upload.data.save(filepath)
@@ -110,8 +127,6 @@ def upload(problem_num):
                 return redirect(url_for('index'))
             else:
                 flash("Your submission is waiting to be graded. Please wait until you receive feedback to submit again.")
-        else:
-            flash('Please select a file with a valid file extension: (.cs, .cpp, .py, .java)')
     return render_template(problem_num+'.html', title = "Problem "+problem_num[1:], form = form)
 
 @app.route('/logout')
