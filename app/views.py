@@ -128,8 +128,7 @@ def upload(problem_num):
                 form.upload.data.save(filepath)
                 flash("File " + filename + " uploaded successfully!")
 
-                user_file = UserFile.Query.filter_by(problem_number=problem_num)
-                user_file.status = "Submitted"
+                user.files[int(problem_num)-1].status = "Submitted"
                 db.session.commit()
 
                 return redirect(url_for('index'))
