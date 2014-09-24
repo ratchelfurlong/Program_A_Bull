@@ -43,7 +43,7 @@ def register():
             user = User(form.username.data, form.password.data)
 
             # makes directory to store files on 
-            directory = os.path.join(app.config['UPLOAD_FOLDER'], form.username.data)
+            directory = os.path.join(app.config['UPLOAD_FOLDER'], 'Teams', form.username.data)
             if not os.path.exists(directory):
                 os.makedirs(directory) 
 
@@ -71,11 +71,11 @@ def register():
 @login_required
 def index():
     user = g.user
-    prob_statuses = user.files
+    user_files = User.query.filter_by(username = user.username).first().files
     return render_template("index.html",
         title = user.username,
         user = user,
-        challenges = prob_statuses)
+        challenges = user_files)
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -108,6 +108,9 @@ def login():
 def allowed_file(filename):
     return '.' in filename and filename.split('.')[-1] in ALLOWED_EXTENSIONS
 
+#
+# CANT FIGURE OUT HOW TO DISPLAY ERROR WHEN UPLOADING WRONG FILE EXTENSION
+#   - if I flash an error as an else to form.validate.submit, it always shows up
 @app.route('/upload/<problem_num>', methods = ['GET', 'POST'])
 @login_required
 def upload(problem_num):
@@ -124,6 +127,11 @@ def upload(problem_num):
             if not os.path.isfile(filepath):
                 form.upload.data.save(filepath)
                 flash("File " + filename + " uploaded successfully!")
+
+                user_file = UserFile.Query.filter_by(problem_number=problem_num)
+                user_file.status = "Submitted"
+                db.session.commit()
+
                 return redirect(url_for('index'))
             else:
                 flash("Your submission is waiting to be graded. Please wait until you receive feedback to submit again.")
