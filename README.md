@@ -1,13 +1,14 @@
 file_upload_app
 ===============
 
-A simple file uploading app written in flask
+An application written to host our programming competition's submissions and automated graded.
+This application uses Miguel Grinberg's microblog tutorial as a reference/baseline, though I've added much functionality that was not included in his tutorial. This app will handle/handles user registration, login, file uploads, latest submission file serving, automated grading and (MAYBE) A scoreboard.
 
-GOAL (remaining):
+TO DO:
 ====
-- upload files to server
-- display uploaded files to user
-- allow deletion of uploaded files
+- On problem page, have button to serve file (latest upload for that question)
+- write 27 remaining problem pages (template files)
+- write grading script
 
 My attempt at explaining how to run this:
 =========================================
@@ -35,4 +36,4 @@ My attempt at explaining how to run this:
 	
 	> python run.py
 
-6) go to localhost:5000 to test it
+4) go to localhost:5000 to test it
