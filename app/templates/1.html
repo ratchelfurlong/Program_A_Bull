@@ -11,17 +11,15 @@
 		<h5>Sample Output:</h5>
 		<p>5 4 3 2 1</p>
 	<div>
-	<div>
-		<form class="form-inline" action="" method="post" enctype="multipart/form-data">
-	        {{ form.hidden_tag() }}
-	        <div class="input-group">
-	            <div class="input-group-btn">
-	                {{ form.upload }}
-	            </div><br>
-	            <p><input id="submit_button" type="submit" class="btn btn-success" value="Upload"></p>
-	        </div>
-	    </form>
-	</div>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="input-group">
+            <div class="input-group-btn">
+                {{ form.upload }}
+            	<input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+            </div>
+        </div>
+    </form>
 </div>
 
 {% endblock %}
