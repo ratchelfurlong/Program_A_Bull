@@ -16,10 +16,10 @@
 			{% for i in range(10) %}
 			<tr>
 				<td><a href="{{ url_for('upload', problem_num = challenges[i].problem_number) }}">
-					Problem {{ challenges[i].problem_number }}</a>
+					Problem {{ challenges[0].problem_number }}</a>
 				</td>
 				<td>
-					{{ challenges[i].status }}
+					{{ challenges[0].status }}
 				</td>
 
 				<td><a href="{{ url_for('upload', problem_num = challenges[i+10].problem_number) }}">
@@ -29,7 +29,7 @@
 					{{ challenges[i+10].status }}
 				</td>
 
-				<td><a href="{{ url_for('upload', problem_num = challenges[i+1].problem_number) }}">
+				<td><a href="{{ url_for('upload', problem_num = challenges[i+20].problem_number) }}">
 					Problem {{ challenges[i+20].problem_number }}</a>
 				</td>
 				<td>
