@@ -2,33 +2,39 @@
 {% block content %}
 {% include 'flash.html' %}
 <div class="well">
-	<h2><u>Problem 4</u></h2>
+    <h2><u>Problem 4</u></h2>
 	<div>
 		<h4><u>Description:</u></h4>
 		<p>The Fibonacci numbers are the numbers in the following integer sequence:</p>
 		<p>0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 141, ...</p>
 		<p>In mathematical terms, the sequence Fn of Fibonacci numbers is defined by the recurrence relation:</p>
-		<p>Fn = F(n-1) + F(n-2), with seed values: F(0) = 0 and F(1) = 1</p><br>
+		<p>Fn = F(n-1) + F(n-2), with seed values: F(0) = 0 and F(1) = 1</p>
 
 		<p><b>Write a function that takes in n as a parameter and returns the nth Fibonacci number.</b></p><br>
 
 		<h5><u>Sample Input:</u></h5>
-		<p>5</p>
-		<p>10</p>
-		<p>100</p>
-		<br>
+		<p>
+		5<br>
+		10<br>
+		100
+		</p>
+
 		<h5><u>Sample Output:</u></h5>
-		<p>5</p>
-		<p>55</p>
-		<p>12586269025</p>
-	<div>
+		<p>
+		5<br>
+		55<br>
+		12586269025
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
 	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
-        <div class="input-group">
-            <div class="input-group-btn">
-                {{ form.upload }}
-            	<input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
-            </div>
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
         </div>
     </form>
 </div>

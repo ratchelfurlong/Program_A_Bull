@@ -5,23 +5,23 @@
 	<h2><u>Problem 2</u></h2>
 	<div>
 		<h4>Description:</h4>
-		<p>Given a list of 2 to 100 values, find the product of the elements in the list</p><br>
+		<p>Given a list of 2 to 100 values, find the product of the elements in the list</p>
 		<h5>Sample Input:</h5>
-		<p>1 2 3 4 5</p><br>
+		<p>1 2 3 4 5</p>
 		<h5>Sample Output:</h5>
 		<p>120</p>
-	<div>
-	<div>
-		<form class="form-inline" action="" method="post" enctype="multipart/form-data">
-	        {{ form.hidden_tag() }}
-	        <div class="input-group">
-	            <div class="input-group-btn">
-	                {{ form.upload }}
-	            </div><br>
-	            <p><input id="submit_button" type="submit" class="btn btn-success" value="Upload"></p>
-	        </div>
-	    </form>
 	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
 </div>
 
 {% endblock %}

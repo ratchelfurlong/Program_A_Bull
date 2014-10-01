@@ -1,1 +1,41 @@
-5
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+<div class="well">
+	<h2><u>Problem 5</u></h2>
+	<div>
+		<h4><u>Description:</u></h4>
+		<p>Fizz Buzz is a general programming problem demonstrating mild competence in basic programming.</p>
+		<p>For each number divisible by 3, print "Fizz"</p>
+		<p>For each number divisible by 5, print "Buzz"</p>
+		<p>For each number divisible by both 3 and 5, print "Fizz Buzz"</p>
+
+		<p><b>Write a function that gives the correct output for natural numbers up to 155 (inclusive).</b></p>
+
+		<h5><u>Sample Input:</u></h5>
+		<p>15</p>
+		<h5><u>Sample Output:</u></h5>
+		<p>
+		Fizz<br>
+		Buzz<br>
+		Fizz<br>
+		Fizz<br>
+		Buzz<br>
+		Fizz<br>
+		Fizz Buzz
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}

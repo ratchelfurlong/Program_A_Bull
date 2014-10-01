@@ -2,7 +2,7 @@
 {% block content %}
 {% include 'flash.html' %}
 <div class="well">
-    <h2>Problem List:</h2>
+    <h2>{{ title }}</h2>
     <div>
 		<table class="table table-striped">
 			<tr>
@@ -16,10 +16,10 @@
 			{% for i in range(10) %}
 			<tr>
 				<td><a href="{{ url_for('upload', problem_num = challenges[i].problem_number) }}">
-					Problem {{ challenges[0].problem_number }}</a>
+					Problem {{ challenges[i].problem_number }}</a>
 				</td>
 				<td>
-					{{ challenges[0].status }}
+					{{ challenges[i].status }}
 				</td>
 
 				<td><a href="{{ url_for('upload', problem_num = challenges[i+10].problem_number) }}">
