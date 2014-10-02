@@ -1,1 +1,36 @@
-11
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+<div class="well">
+	<h2><u>Problem 10</u></h2>
+	<div>
+		<h4><u>Description:</u></h4>
+
+		<p>Given n numbers of 100 digits each, please output the sum of the first 20 digits of the sum of all 100 numbers.<br>
+		The first line is n, the number of lines to input, followed by n lines of input.</p>
+		
+		<h5><u>Sample Input:</u></h5>
+		<p>
+		3<br>
+		6676326028624950437427358752138903119199319356674850374053988537558214412909770704885683775524611893<br>
+		0775076938493527817454324918430681990520497595839131818421946858067062285490038949146600468665529953<br>
+		6927320651348288891657158943704629991140477113156302644965037476309781943875440810051941575965533808<br>
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		<p>don't know yet</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}
