@@ -1,1 +1,56 @@
-15
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem 15</u></h2>
+	<div>
+
+		<h4>Problem Difficulty: Medium</h4>
+
+		<h4><u>Description:</u></h4>
+		<p>
+		The following iterative sequence is defined for the set of positive integers:<br>
+		n → n/2 (n is even)<br>
+		n → 3n + 1 (n is odd)
+		</p>
+
+		<p>
+		Using the rule above and starting with 13, we generate the following sequence:<br>
+		13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1<br>
+		It can be seen that this sequence (starting at 13 and finishing at 1) contains 10 terms. Although it has not been proved yet (Collatz Problem), it is thought that all starting numbers finish at 1.
+		</p>
+
+		<p>
+		Which starting number, under one million, produces the longest chain using the rules described for the Collatz Sequence?<br>
+		NOTE: Once the chain starts the terms are allowed to go above one million.
+		</p>
+
+		<h5><u>Sample Input:</u></h5>
+		<p>
+		13<br>
+		27<br>
+		1250
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		<p>
+		10<br>
+		112 <br>
+		27
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,1 +1,43 @@
-13
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem 13</u></h2>
+	<div>
+
+		<h4>Problem Difficulty: Medium</h4>
+
+		<h4><u>Description:</u></h4>
+		<p>
+		Given an equation in infix notation, output the same equation in postfix notation(aka: "Reverse Polish notation").<br>
+		</p>
+
+		<h5><u>Sample Input:</u></h5>
+		<p>
+		X + Y<br>
+		(A * (B + C)) / D <br>
+		A * B + C / D
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		<p>
+		X Y +<br>
+		A B C + * D /<br>
+		A B * C D / +
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}

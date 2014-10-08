@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem 6</u></h2>
+	<div>
+
+		<h4>Problem Difficulty: Easy</h4>
+
+		<h4><u>Description:</u></h4>
+		<p>
+		Let's define the Hamming distance between two equal length strings be the number of differing bits between the strings.<br>
+		Whitespaces are counted as a character in this problem (e.g. 'Hello' and 'I eat' both have 5 characters in it).<br>
+		</p>
+
+		<p>Write a function that computes the Hamming Distance between two equal strings. If the strings aren't equal, output '-1'. </p>
+		
+		<h5><u>Sample Input:</u></h5>
+		<p>
+		this is the first string<br>
+		Hello! I am B@B oth3r!!!<br>
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		<p>
+		71
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}

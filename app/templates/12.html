@@ -1,1 +1,52 @@
-12
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h1><u>Problem 12</u></h1>
+	<div>
+
+		<h4>Problem Difficulty: Medium</h4>
+
+		<h4><u>Description:</u></h4>
+		<p>
+			You have risen from the grave as an undead zombie and managed to claw your way to the surface. Two teenagers are having a romantic, midnight stroll nearby. Satisfy your hunger for the flesh of the living by eating the happy couple.<br>
+			Your rotting body is prone to falling apart, so get to the teenagers in as few steps as possible. Avoid hazards, like open graves and shotgun wielding zombie slayers. Some of the terrain is swampy and  hard to cross. Other terrain is inhabited by demonic spirits that can heal your decrepit corpse.<br>
+		</p>
+		
+		<p>
+			You will be given a grid representing the area around the zombie. Your starting position is denoted by "S". The teenager's positions is denoted by "T". Impassable positions are denoted by "X".<br>
+			Swampy terrain costs 2 rotten body parts to cross and is denoted by "W". Terrain containing demonic spirits costs -1 rotten body parts to cross and is denoted by "D". All other positions cost 1 rotten body part to cross and are represented by "O".<br>
+			Represent the direction taken using this key: use "U" for up, "D" for down, "L" for left, and "R" for right. If there is more than one shortest path, pick the path with the fewest steps taken.<br>
+		</p>
+		<p>Output the the path from grave to teenagers in which the zombie loses the least number of body parts and the cost of the path, separated by a space character.</p>
+
+		<h5><u>Sample Input:</u></h5>
+		<p>
+			OOODODO<br>
+			OZXOOOO<br>
+			OWDODOO<br>
+			OXXXXWX<br>
+			OODWOTO<br>
+
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		<p>
+			DRRRRDD 5<br>
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}

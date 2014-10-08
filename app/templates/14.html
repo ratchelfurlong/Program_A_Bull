@@ -1,1 +1,46 @@
-14
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem 14</u></h2>
+	<div>
+
+		<h4>Problem Difficulty: Medium</h4>
+
+		<h4><u>Description:</u></h4>
+		<p>
+		You are given two encrypted messages and your goal is to find the key and the orginal plaintext.<br>
+		</p>
+
+		<p>Hints:<br> If you XOR the same thing together, it cancels out (a xor a = 0)<br>- The key is 24 characters.<br>- The input strings are formatted to look beautifully, you might want to do something to the inputs before you tackle the bigger problem.<br>Please upload your answer as a .txt file./p><br>
+
+		<h5><u>Sample Input:</u></h5>
+		<p>
+		Ciphertext 1:<br>
+		0x70204e10a1c71d534bd01a49685614c404f591a3f3149171b105248854543a1bc1c474c445516549503b241d1c154952421c701a018491e154e4340434d591a3b3961954111a411d5341111d2ef942441484f0593f3a191b00001a104961ec4ee5214c4440534f2232d4e1db524e81d4f4e2b4351455534052f71a7d7728215b526b8a<br>
+		Ciphertext 2:<br>
+		0x702f1c110164f4534f114f787bd1424d485049703e71d1117645d5f024ff8c1e652143444954703561c1a45214141601760c4ea5814c404f053237741b611752c17c431b5c4e54446484f4f49543777801045174ed541a434f2f104e13494415340501a37327711652d493d4110434d1a19461b116f4149703e1a4e38c19454753<br>
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		<p>
+		Key<br>
+		Plaintext 1<br>
+		Plaintext 2
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,1 +1,45 @@
-7
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem 7</u></h2>
+	<div>
+
+		<h4>Problem Difficulty: Easy</h4>
+
+		<h4><u>Description:</u></h4>
+		<p>
+		Print the words that have the most, second most and third most occurrences in the given string.<br>
+		</p>
+
+		<p>Hints: We will be testing strings that will have more than 200 words. Your program will timeout if you use a brute-force approach<br>
+		If there is a tie, output the word that occurs first in the string.<br>
+		For this problem, ignore character case ('HELLO' is equivalent to 'hello').</p>
+
+		<h5><u>Input:</u></h5>
+		<p>
+		My name is Bob. Today is Tuesday. Bob is hungry! 
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		<p>
+		is<br>
+		bob<br>
+		my<br>
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}

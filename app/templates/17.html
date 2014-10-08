@@ -1,1 +1,32 @@
-17
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem 17</u></h2>
+	<div>
+
+		<h4>Problem Difficulty: Medium</h4>
+
+		<h4><u>Description:</u></h4>
+		<p>Starting in the top left corner of a 2×2 grid, and only being able to move to the right and down, there are exactly 6 routes to the bottom right corner.</p>
+
+		<img src="https://projecteuler.net/project/images/p015.gif">
+
+		<p>How many such routes are there through a 20×20 grid?</p>
+
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}

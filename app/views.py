@@ -137,7 +137,7 @@ def upload(problem_num):
                 return redirect(url_for('index'))
             else:
                 flash("Your submission is waiting to be graded. Please wait until you receive feedback to submit again.")
-    return render_template(problem_num+'.html', title = "Problem "+problem_num[1:], form = form)
+    return render_template(problem_num+'.html', title = "Problem "+problem_num, form = form)
 
 @app.route('/logout')
 def logout():
