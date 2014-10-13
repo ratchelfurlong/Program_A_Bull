@@ -5,7 +5,7 @@
 	<h3>Register for Program-A-Bull:</h3>
 	<form action="{{ url_for('register') }}" method="post" class="form">
 		{{form.hidden_tag()}}
-		<div class="control-group{% if form.errors.username %} error{% endif %}">
+		<div class="control-group {% if form.errors.username %} error {% endif %}">
 		    <div class="controls">
 				{{form.username(size=30, class = "span3", placeholder="Username")}}<br>
 				{% for error in form.errors.username %}
@@ -13,7 +13,7 @@
 				{% endfor %}
 		    </div>
 		</div>
-		<div class="control-group{% if form.errors.password %} error{% endif %}">
+		<div class="control-group {% if form.errors.password %} error {% endif %}">
 			<div class="controls">
 				{{form.password(size=30, class = "span3", placeholder="Password")}}<br>
 				{% for error in form.errors.password %}
@@ -21,13 +21,16 @@
 				{% endfor %}
 			</div>
 		</div>
-		<div class="control-group{% if form.errors.confirm %} error{% endif %}">
+		<div class="control-group {% if form.errors.confirm %} error {% endif %}">
 		    <div class="controls">
 		        {{form.confirm(size=30, class = "span3", placeholder="Confirm Password")}}<br>
 		        {% for error in form.errors.confirm %}
 		        <span class="help-inline">[{{error}}]</span><br>
 		        {% endfor %}
 		    </div>
+		</div>
+		<div class="control-group {% if form.errors.confirm %} error {% endif %}">
+			{{ form.recaptcha }}
 		</div>
 		<div class="control-group">
 		    <div class="controls">

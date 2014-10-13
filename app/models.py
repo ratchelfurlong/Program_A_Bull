@@ -8,14 +8,15 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(64), index = True, unique = True)
     pwd_hash = db.Column(db.String(64))
+    score = db.Column(db.Integer, default = 0)
     role = db.Column(db.SmallInteger, default = ROLE_USER)
     files = db.relationship('UserFile', backref = 'team', lazy = 'dynamic')
 
     def __init__(self, username, password):
         self.username = username
         self.set_password(password)
-        self.uploaded_files = []
-
+        self.problems_solved = set()
+        
     def set_password(self, password):
         self.pwd_hash = generate_password_hash(password)
 

@@ -66,12 +66,30 @@ def register():
             form.username.errors.append('That username is already taken!')
     return render_template('register.html', form = form)
 
+def update_score(user):
+    directory = os.path.join(app.config['UPLOAD_FOLDER'], 'Teams', user.username)
+    for p_sol in os.listdir(directory):
+        sol_name = p_sol.split('.')[0]
+        if sol_name not in user.problems_solved:
+            # adds problem to set of solved problems
+            user.problems_solved.add(sol_name)
+            prob_num = sol_name.split('_')[1]
+            if prob_num in range(1,11):
+                user.score += 10
+            elif prob_num in range(11,21):
+                user.score += 20
+            else:
+                user.score += 30
+    db.session.commit()
 
 @app.route('/index', methods = ['GET', 'POST'])
 @login_required
 def index():
     user = g.user
     user_files = User.query.filter_by(username = user.username).first().files
+
+    update_score(user)
+
     return render_template("index.html",
         title = user.username,
         user = user,
@@ -137,6 +155,8 @@ def upload(problem_num):
                 return redirect(url_for('index'))
             else:
                 flash("Your submission is waiting to be graded. Please wait until you receive feedback to submit again.")
+        else:
+            flash("Please choose a file with extension '.cs', '.java', '.cpp', or '.py'")
     return render_template(problem_num+'.html', title = "Problem "+problem_num, form = form)
 
 @app.route('/logout')
