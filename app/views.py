@@ -67,33 +67,36 @@ def register():
     return render_template('register.html', form = form)
 
 def update_score(user):
+    # looks at team folder files to check if there are any new
     directory = os.path.join(app.config['UPLOAD_FOLDER'], 'Teams', user.username)
+    # loops through each file in the directory
     for p_sol in os.listdir(directory):
-        sol_name = p_sol.split('.')[0]
-        if sol_name not in user.problems_solved:
-            # adds problem to set of solved problems
-            user.problems_solved.add(sol_name)
-            prob_num = sol_name.split('_')[1]
+
+        prob_num = int(p_sol.split('.')[0].split('_')[1])
+        file_to_update = user.files[prob_num-1]
+
+        if file_to_update.status == "Submitted":
+            file_to_update.status = "Solved"
             if prob_num in range(1,11):
                 user.score += 10
             elif prob_num in range(11,21):
                 user.score += 20
             else:
                 user.score += 30
+
     db.session.commit()
 
 @app.route('/index', methods = ['GET', 'POST'])
 @login_required
 def index():
     user = g.user
-    user_files = User.query.filter_by(username = user.username).first().files
-
     update_score(user)
 
     return render_template("index.html",
         title = user.username,
+        score = user.score,
         user = user,
-        challenges = user_files)
+        challenges = user.files)
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -126,9 +129,6 @@ def login():
 def allowed_file(filename):
     return '.' in filename and filename.split('.')[-1] in ALLOWED_EXTENSIONS
 
-#
-# CANT FIGURE OUT HOW TO DISPLAY ERROR WHEN UPLOADING WRONG FILE EXTENSION
-#   - if I flash an error as an else to form.validate.submit, it always shows up
 @app.route('/upload/<problem_num>', methods = ['GET', 'POST'])
 @login_required
 def upload(problem_num):

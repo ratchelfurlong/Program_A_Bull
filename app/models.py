@@ -15,7 +15,6 @@ class User(db.Model):
     def __init__(self, username, password):
         self.username = username
         self.set_password(password)
-        self.problems_solved = set()
         
     def set_password(self, password):
         self.pwd_hash = generate_password_hash(password)
@@ -37,7 +36,7 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % (self.username)
-
+        
 class UserFile(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     problem_number = db.Column(db.Integer)

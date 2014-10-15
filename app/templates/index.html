@@ -2,7 +2,15 @@
 {% block content %}
 {% include 'flash.html' %}
 <div class="well">
-    <h2>{{ title }}</h2>
+	<div>
+		<div style="float: left;" class="">
+		    <h2>Team: {{ title }}</h2>
+		</div>
+		<div style="float: right; width: 200px;">
+    		<h2>Score: {{ score }}</h2>
+		</div>
+		<br style="clear: left;" />
+	</div>
     <div>
 		<table class="table table-striped">
 			<tr>

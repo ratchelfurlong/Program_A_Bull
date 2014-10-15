@@ -1,1 +1,47 @@
-8
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem 8</u></h2>
+	<div>
+
+		<h4>Problem Difficulty: Easy</h4>
+
+		<h4><u>Description:</u></h4>
+		<p>
+		Man, I am hella weird. In my luxurious mansion, there are <b>n</b> lights along the Wall of Awesomeness. Each light has a corresponding switch. I like to take long walks down my beautiful hallway every day, but because this walk is sorta boring, I play a little game: I toggle each light switch that is divisible with <b>i</b> where <b>i</b> is the number of times I have walked down the lovely hallway (down the hallway is one walkthrough and back to the beginning is the another walkthrough, during my first walk, i = 1, and on the walk back to the beginning. i = 2). I do this <b>n</b> amount of times. So, my question for you is: Given the number x, where x corresponds to the position of the switch in the hallway, is that light on or off? (i.e. if my hallway has 10 light switches, and x = 4, is the 4th light switch on or off?)<br>
+		</p>
+
+		<p>Input:<br> First line is your <b>n</b>. The rest of the lines are the positions of the lights. Your job is to tell me if by the end of my walk, which of these lights are on or off.<br> Output:<br> "on" if the light is on, "off" if the light is off. Each test case is terminated by a -1, but there will be multiple test cases.<br> I dont live in the Taj Mahal, I'll only have at most 10,000 lights in this hallway.</p><br>
+
+		<h5><u>Input:</u></h5>
+		<p>
+		10<br>
+		3<br>
+		7<br>
+		4<br>
+		-1
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		<p>
+		off<br>
+		off<br>
+		on<br>
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}

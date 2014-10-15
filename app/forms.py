@@ -13,7 +13,7 @@ class RegisterForm(Form):
 	username = TextField("Team Name", validators = [DataRequired("Username Field Required"), Length(min=3, max=15)])
 	password = PasswordField('New Password', validators = [DataRequired("Password Field Required"), Length(min=5, max=20), EqualTo('confirm', message='Passwords must match')])
 	confirm = PasswordField('Repeat Password')
-	recaptcha = RecaptchaField(label="Enter the number shown", validators=[DataRequired(message="Please try again!")])
+	recaptcha = RecaptchaField()
 
 class UploadForm(Form):
 	upload = FileField("Upload your solution:", validators = [DataRequired("Please choose a file to submit!")])

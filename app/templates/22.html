@@ -1,1 +1,48 @@
-22
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem 22</u></h2>
+	<div>
+
+		<h4>Problem Difficutly: Hard</h4>
+
+		<h4><u>Description:</u></h4>
+		<p>
+		We want to host a game of tug of war. In order to make it fair, we would like to make the teams as fair as possible.<br>Your job is the make the teams as even as possible. Each line of input will signify a skill level of a person waiting to be selected for a team and when making the teams, the amount of people on a team must only differ by 1.
+		<p>
+		Input format: The first line of each test case signifies how many participants for the round. Each line afterwards till the end of the test input will be the strength number for that participant. Test inputs will be seperated by a newline character. Each test case will terminate with a -1, but be sure to account for multiple test cases.<br>
+		Output format: Print the total skill level of each team separated by a space, with the team with the lower skill level printed first (separated by a space).
+		</p>
+
+		<h5><u>Input:</u></h5>
+		<p>
+		5<br>
+		100<br>
+		200<br>
+		20<br>
+		80<br>
+		160<br>
+		-1
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		<p>
+		280 280<br>
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}

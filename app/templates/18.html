@@ -1,1 +1,52 @@
-18
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem 18</u></h2>
+	<div>
+
+		<h4>Problem Difficulty: Medium</h1>
+
+		<h4><u>Description:</u></h4>
+		<p>
+		Given two strings a and b, print the longest string of x letters such that x is a sequence of a and a permuation of x is a subsequence of b. Hint: Subsequences are not necessarily contiguous.
+		<br>
+		The input file contains several test cases represented as a pair of strings on each line. Each line contains two strings of lowercase characters, with first string of a pair denoting a and the second denoting b.Each string consists of at most 1,000 characters.
+		<br>
+		For each set of input,output a line contaiing x. If several x satisfy the criteria above, choose the first one in alphabetical order.
+		</p>
+
+		
+		<h5><u>Sample Input:</u></h5>
+		<p>
+		pretty women
+		<br>
+		walking	down
+		<br>
+		the street
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		<p>
+		e
+		<br>
+		nw
+		<br>
+		et
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}
