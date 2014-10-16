@@ -1,1 +1,84 @@
-23
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem Number</u></h2>
+	<div>
+
+		<h4>Problem Difficulty: Hard</h4>
+
+		<h4><u>Description:</u></h4>
+		<p>
+		My little sister had a beautiful necklace made of colored beads. Each two successive beads in the necklace shared a common color at their meeting point, as shown:
+		<br>
+		<br>
+		(green,red)(red,white)(white,green)(green,blue)
+		<br>
+		<br>
+		But, alas! One day, the necklace tore and the beads were scattered all over the floor.My sister did her best to pick up all the beads, but she is not sure whether she found them all. Now she has come to me for help. She wants to know whether it is possible to make a necklace using all the beads she has in the same way that her original necklace was made. If so, how can the beads be arranged? 	
+
+		<p>
+		Input- The first line of each test case contains an integer N (5&#8804=N&#8804=1000) giving the numbers of beads my sister found (hint: if a line contains one integer, this is a new test case). Each of the next N lines contains two integers describing the colors of a bead. colors are represented by integers ranging from 1 to 50.
+		</p>
+		<p>
+		Output- If reconstruciton is impossible, print the sentence "some beads may be lost" on a line by itself. Otherwise, print N lines each with a single bead description such that for 1&#8804= i &#8804= N-1, the second integer on line i must be the same as the first integer in the following bead. Additonally, the second integer on line N must be equal to the first integer on line 1. <b>WUT</b>There may be many solutions, any one of which is acceptable.<b>WUT</b>   
+		</p>
+
+		<h5><u>Sample Input:</u></h5>
+		<p>
+		5
+		<br>
+		1 2
+		<br>
+		2 3
+		<br>
+		3 4
+		<br>
+		4 5
+		<br>
+		5 6 
+		<br>
+		5 
+		<br>
+		2 1 
+		<br>
+		2 2 
+		<br>
+		3 4 
+		<br>
+		3 1 
+		<br>
+		2 4
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		<p>
+		some beads may be lost
+		</p>
+		<p>
+		2 1 
+		<br>
+		1 3 
+		<br>
+		3 4 
+		<br>
+		4 2 
+		<br>
+		2 2   
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}

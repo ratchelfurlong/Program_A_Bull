@@ -1,1 +1,46 @@
-24
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem Number</u></h2>
+	<div>
+
+		<h1>Hard</h1>
+
+		<h4><u>Description:</u></h4>
+		<p>
+		Given a list of numbers, output the smallest number <b>G</b> such that the first digits of 2^<b>G</b> is equal to the input number. Numbers will be no larger than 100,000. If no such <b>G</b> exists, output "None available".
+		</p>
+
+		<h5><u>Input:</u></h5>
+		<p>
+		1<br>
+		20<br>
+		5<br>
+		6<br>
+		7<br>
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		<p>
+		7<br>
+		11<br>
+		9<br>
+		6<br>
+		46</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}
