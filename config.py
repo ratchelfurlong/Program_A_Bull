@@ -1,4 +1,4 @@
-import os 
+import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -10,8 +10,8 @@ SECRET_KEY = 'msdn_club_usf'
 
 # captcha config
 RECAPTCHA_USE_SSL = False
-RECAPTCHA_PUBLIC_KEY = '6LeYIbsSAAAAACRPIllxA7wvXjIE411PfdB2gt2J'
-RECAPTCHA_PRIVATE_KEY = '6LeYIbsSAAAAAJezaIq3Ft_hSTo0YtyeFG-JgRtu'
+RECAPTCHA_PUBLIC_KEY = '6Lc7KfwSAAAAAO2ewgfog50aM8yr8RpPzrQNsg_e'
+RECAPTCHA_PRIVATE_KEY = '6Lc7KfwSAAAAAPUFrcSIZgbYWaAlDyXN7EfXZFqT'
 RECAPTCHA_OPTIONS = {'theme': 'white'}
 
 UPLOAD_FOLDER = os.path.join(basedir, 'uploads')

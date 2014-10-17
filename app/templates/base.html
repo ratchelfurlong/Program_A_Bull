@@ -23,7 +23,7 @@
           </a>
           <a class="brand" href="/">Program-A-Bull</a>
           <ul class="nav">
-            <li><a href="{{ url_for('index') }}">Files Submitted</a></li>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
             {% if g.user.is_authenticated() %}
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% else %}
@@ -38,6 +38,6 @@
           {% block content %}{% endblock %}
         </div>
       </div>
-    </div>   
+    </div>
   </body>
 </html>
