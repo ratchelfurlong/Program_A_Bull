@@ -1,14 +1,14 @@
-file_upload_app
+Program_A_Bull App
 ===============
 
 An application written to host our programming competition's submissions and automated graded.
-This application uses Miguel Grinberg's microblog tutorial as a reference/baseline, though I've added much functionality that was not included in his tutorial. This app will handle/handles user registration, login, file uploads, latest submission file serving, automated grading and (MAYBE) A scoreboard.
+This application uses Miguel Grinberg's microblog tutorial as a reference/baseline, though I've added much functionality that was not included in his tutorial. This app will handle/handles user registration, login, file uploads, latest submission file serving, and automated grading.
 
 TO DO:
 ====
-- On problem page, have button to serve file (latest upload for that question)
-- write 27 remaining problem pages (template files)
-- write grading script
+- Integrate grading script with actual application
+- add test cases for EVERY PROBLEM!!
+- test test test!
 
 My attempt at explaining how to run this:
 =========================================
