@@ -15,4 +15,6 @@ RECAPTCHA_PRIVATE_KEY = '6Lc7KfwSAAAAAPUFrcSIZgbYWaAlDyXN7EfXZFqT'
 RECAPTCHA_OPTIONS = {'theme': 'white'}
 
 UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
+SOLUTION_TESTS_FOLDER = os.path.join(basedir, 'tests')
 ALLOWED_EXTENSIONS = set(['cs', 'py', 'cpp', 'java'])
+MAX_CONTENT_LENGTH = 16 * 1024 * 1024

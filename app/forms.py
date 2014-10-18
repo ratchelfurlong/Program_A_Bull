@@ -17,3 +17,4 @@ class RegisterForm(Form):
 
 class UploadForm(Form):
 	upload = FileField("Upload your solution:", validators = [DataRequired("Please choose a file to submit!")])
+	recaptcha = RecaptchaField()

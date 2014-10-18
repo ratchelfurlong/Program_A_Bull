@@ -1,1 +1,43 @@
-26
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem 26</u></h2>
+	<div>
+
+		<h1>Problem Difficulty: Hard</h1>
+
+		<h4><u>Description:</u></h4>
+		<p>
+		Write a program that will compute the derivative of the given function. An exmple of the function is as follows:  "dy (5x ^ 2) + (7y ^ 2) - 8"; this string states that you should take the derivative of the function with respect to y (partial derivative). Every exponent clause will bbe covered by a set of parenthesis (hint on how to parse the string)
+		</p>
+
+		<p>Hints:<br> Multiplication rule is:  (fg)` = f `g + fg` (` denotes the derivative of whatever is being primed)<br>Chain Rule: if (f(x) == h(g(x))) then f`(x) = h`(g(x)) * g`(x)<br>Partial Derivative:  Take the derivative on the variable that matches the 'd/d*' andtreat everything else as a constant.<br>d/dx sin(x) = cos(x)<br>d/dx cos(x) = -sin(x)<br>d/dx e^x = e^x<br>d/dx ln(x) = 1/x<br>d/dx a^x = (a^x) * ln(a)<br>Depending on the function, you might need to implement multiplication rule, the chain rule or implemet partial dericatives to obtain the answer. <br>The only operators that are going to be used is '+', '-', '*' (so there is no need to implement the division rule)
+
+		<h5><u>Sample Input:</u></h5>
+		<p>
+		dx (6x ^ 2) + (7x ^ 3)<br>dx (sin(2x))
+	
+		<h5><u>Sample Output:</u></h5>
+		<p>
+		(12x) + (21x ^ 2)<br>2 * (sin(2x))
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group {% if form.errors.confirm %} error {% endif %}">
+			{{ form.recaptcha }}
+		</div>
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}

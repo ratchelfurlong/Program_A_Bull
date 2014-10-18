@@ -1,1 +1,47 @@
-9
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem 9</u></h2>
+	<div>
+
+		<h1>Problem Difficulty: Easy</h1>
+
+		<h4><u>Description:</u></h4>
+		<p>
+			In Khalid’s alphabet the letters are arranged thequickbrownfxjmpsvlazydg. Accordingly, his ascii table is also suited to fit this. Given an array of Strings, return the sorted array (in ascending order)  conforming to this ascii table.
+		</p>
+
+		<h5><u>Sample Input:</u></h5>
+		<p>
+			the, quick, brown, lazy, dog, Jumps, over, The, Fox<br/>
+			3, 35, 3., 3.14, 3.141, 3.1415, 3.14159, TRoLL, troll, TrOlL, tRoLl<br/>
+			the, cat, ThE, caT, teh, TeH, tehe, TEHE
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		
+		<p>
+			The, Fox, Jumps, the, quick, brown, over, lazy, dog</br>
+			3, 3., 3.14, 3.141, 3.1415, 3.14159, 35, TRoLL, TrOlL, tRoLl, troll<br/>
+			TEHE, ThE, TeH, the, teh, tehe, caT, cat
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group {% if form.errors.confirm %} error {% endif %}">
+			{{ form.recaptcha }}
+		</div>
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}

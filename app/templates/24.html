@@ -3,10 +3,10 @@
 {% include 'flash.html' %}
 
 <div class="well">
-    <h2><u>Problem Number</u></h2>
+    <h2><u>Problem 24</u></h2>
 	<div>
 
-		<h1>Hard</h1>
+		<h4>Problem Difficulty: Hard</h4>
 
 		<h4><u>Description:</u></h4>
 		<p>
@@ -28,7 +28,8 @@
 		11<br>
 		9<br>
 		6<br>
-		46</p>
+		46
+		</p>
 	</div>
 </div>
 
@@ -36,6 +37,9 @@
 	<h4><u>Upload Submission</u></h4>
 	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
+        <div class="control-group {% if form.errors.confirm %} error {% endif %}">
+			{{ form.recaptcha }}
+		</div>
         <div class="control-group">
         	{{ form.upload }}
             <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
