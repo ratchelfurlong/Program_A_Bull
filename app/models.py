@@ -12,9 +12,10 @@ class User(db.Model):
     role = db.Column(db.SmallInteger, default = ROLE_USER)
     files = db.relationship('UserFile', backref = 'team', lazy = 'dynamic')
 
-    def __init__(self, username, password):
+    def __init__(self, username, password, role=ROLE_USER):
         self.username = username
         self.set_password(password)
+        self.role = role
         
     def set_password(self, password):
         self.pwd_hash = generate_password_hash(password)
