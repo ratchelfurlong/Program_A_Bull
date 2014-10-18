@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, login_manager
-from app.forms import LoginForm, RegisterForm, UploadForm
+from app.forms import LoginForm, RegisterForm, UploadForm, EditUserScoreForm
 from app.models import User, ROLE_USER, ROLE_ADMIN, UserFile
 from config import ALLOWED_EXTENSIONS, UPLOAD_FOLDER, MAX_CONTENT_LENGTH, SOLUTION_TESTS_FOLDER
 from datetime import datetime
@@ -102,10 +102,6 @@ def login():
             form.username.errors.append("Invalid username!")
     return render_template('login.html', title = 'Sign In', form = form)
 
-# checks if file is of proper type
-def allowed_file(file_name):
-    return '.' in file_name and file_name.split('.')[-1] in ALLOWED_EXTENSIONS
-
 @app.route('/upload/<problem_num>', methods = ['GET', 'POST'])
 @login_required
 def upload(problem_num):
@@ -113,34 +109,49 @@ def upload(problem_num):
     form = UploadForm()
     if form.validate_on_submit():
         file_data = form.upload.data
-        file_name = secure_filename(file_data.filename)
+
+        # renames file to username_prob_num.file_ext
+        file_ext = file_data.filename.split('.')[1]
+        file_name = secure_filename(user.username +"_"+problem_num+'.'+file_ext)
+
         if file_data and allowed_file(file_name):
 
-            file_path = os.path.join(
+            file_path_user_folder = os.path.join(
                 app.config['UPLOAD_FOLDER'],
                 "Teams",
                 user.username,
                 file_name
+            )   
+
+            file_path_cs_java = os.path.join(
+                UPLOAD_FOLDER,
+                "cs_java_files_to_grade",
+                file_name
             )
-            #file_size = os.path.getsize(file_data)
-            # maybe this : if file_size < MAX_CONTENT_LENGTH
-            # tries to remove the file if it exists before creating a new one
-            if not os.path.isfile(file_path):
-                form.upload.data.save(file_path)
-                flash("File " + file_name + " uploaded successfully!")
+
+            # if file exists, report it's still waiting to be graded
+            if not os.path.isfile(file_path_user_folder):
+                # saves file to folder, will delete if test failed
+                file_data.save(file_path_user_folder)              
 
                 # changes file status
                 user.files[int(problem_num)-1].status = "Submitted"
                 db.session.commit()
 
-                # THIS SHIT IS SUPER IMPORTANT!!!!!
-                if grade_submission(user, file_path, file_name, problem_num):
-                    update_file_status(user, problem_num, "Solved")
-                    update_score(user, int(problem_num))
+                file_ext = file_name.split('.')[1]
+                # if file is cpp or python, auto grade
+                if file_ext in ['py', 'cpp']:
+                    if grade_submission(user, file_path_user_folder, file_name, problem_num):
+                        update_file_status(user, problem_num, "Solved")
+                        update_score(user, int(problem_num))
+                    else:
+                        update_file_status(user, problem_num, "Failed")
+                        os.remove(file_path_user_folder)
+                # if java or cs file, save to cs_java folder to await manual grading
                 else:
-                    update_file_status(user, problem_num, "Failed")
-                    os.remove(file_path)
+                    file_data.save(file_path_cs_java)
 
+                flash("File " + file_name + " uploaded successfully!")
                 return redirect(url_for('index'))
             else:
                 flash("Your submission is waiting to be graded. Please wait until you receive feedback to submit again.")
@@ -153,20 +164,6 @@ def upload(problem_num):
 def logout():
     logout_user()
     return redirect(url_for('index'))
-
-def update_file_status(user, problem_num, new_status):
-    file_to_update = user.files[int(problem_num)-1]
-    file_to_update.status = new_status
-    db.session.commit()
-
-def update_score(user, problem_num):
-    if problem_num in range(0,10):
-        user.score += 10
-    elif problem_num in range(10,20):
-        user.score += 20
-    else:
-        user.score += 30
-    db.session.commit()
 
 def grade_submission(user, file_path, file_name, problem_num):
     test_input_path = os.path.join(
@@ -193,43 +190,20 @@ def grade_submission(user, file_path, file_name, problem_num):
     if file_ext == 'cpp':
         pre = subprocess.Popen(['g++', file_path, '-o', exec_name])
         pre.wait()
-
         p = subprocess.Popen(
             ['./'+exec_name],
             stdin=test_input, 
             stdout=user_file_output
         )
-
-    elif file_ext == 'java':
-        pre = subprocess.Popen(['javac', file_path])
-        pre.wait()
-
-        p = subprocess.Popen(
-            ['java', exec_name],
-            stdin=test_input, 
-            stdout=user_file_output
-        )
-
     elif file_ext == 'py':
-
         p = subprocess.Popen(
             ['python', file_path],
             stdin=test_input, 
             stdout=user_file_output
         )
-    elif file_ext == 'cs':
-        pre = subprocess.Popen(['mcs', file_name])
-        pre.wait()
 
-        p = subprocess.Popen(
-            ['mono', exec_name+'.exe'],
-            stdin=test_input, 
-            stdout=user_file_output
-        )
-
-    t = threading.Timer(60.0, timeout, [p] )
+    t = threading.Timer(60.0, timeout, [p])
     t.start()
-    #p.join()
     p.wait()
     t.cancel()
     user_file_output.flush()
@@ -237,6 +211,73 @@ def grade_submission(user, file_path, file_name, problem_num):
 
     return checkAns(user_file_output.readlines(), test_output.readlines())
 
+@app.route('/admin_update_score')
+@login_required
+def admin_update_score():
+    user = g.user
+    allowed_statuses = ["Solved", "Failed"]
+    allowed_problem_nums = range(1,31)
+    form = EditUserScoreForm()
+    if user.role:
+        if form.validate_on_submit():
+            user = User.query.filter_by(username=form.teamname.data).first()
+            prob_num = form.problem_number.data
+            new_status = form.status.data
+
+            file_path_user_folder = os.path.join(
+                app.config['UPLOAD_FOLDER'],
+                "Teams",
+                user.username
+            )   
+
+            if user:
+                if prob_num in allowed_problem_nums:
+                    if new_status in allowed_statuses:
+
+                        #changes problem status to desired value
+                        update_file_status(user, prob_num, status)
+
+                        if new_status == "Solved":
+                            update_score(user, prob_num)
+                        elif new_status == "Failed":
+                            # if failed, removes file from user folder
+                            for user_file in os.listdir(file_path_user_folder):
+                                current_file_name = user_file.split('.')[0]
+                                wanted_file_name = user.username+'_'+prob_num
+                                if file_name == wanted_file_name:
+                                    os.remove(os.path.join(file_path_user_folder, wanted_file_name))
+                                    break
+                    else:
+                        form.status.errors.append("Invalid Status Update!")
+                else:
+                    form.problem_number.errors.append("Invalid problem number!")
+            else:
+                form.teamname.errors.append("Invalid team name!")
+        return render_template(
+            'admin_update_score.html',
+            form = form,
+            title = "Manual Edit")
+    else:
+        redirect(url_for('index'))
+
+""" HELPER FUNCTION BLOCK """
+# checks if file is of proper type
+def allowed_file(file_name):
+    return '.' in file_name and file_name.split('.')[-1] in ALLOWED_EXTENSIONS
+
+def update_file_status(user, problem_num, new_status):
+    file_to_update = user.files[int(problem_num)-1]
+    file_to_update.status = new_status
+    db.session.commit()
+
+def update_score(user, problem_num):
+    if problem_num in range(1,11):
+        user.score += 10
+    elif problem_num in range(11,21):
+        user.score += 20
+    else:
+        user.score += 30
+    db.session.commit()
 
 def checkAns(user_file_output, test_output):
     for l, line in enumerate(user_file_output):

@@ -18,3 +18,8 @@ class RegisterForm(Form):
 class UploadForm(Form):
 	upload = FileField("Upload your solution:", validators = [DataRequired("Please choose a file to submit!")])
 	recaptcha = RecaptchaField()
+
+class EditUserScoreForm(Form):
+	teamname = TextField("Team Name", validators = [DataRequired()])
+	problem_number = TextField("Problem Number", validators = [DataRequired()])
+	status = TextField("Updated Status", validators = [DataRequired()])

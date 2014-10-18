@@ -25,17 +25,29 @@ def timeout( p ):
                 if e.errno != errno.ESRCH:
                     raise
 
+def grade_submission()
+    test_input = open(test_input_path, 'r')
+    test_output = open(test_output_path, 'r')
+    user_file_output = open(user_output_file_path, 'w+')
 
-if __name__ == '__main__':
-	my_input = open('test_cases.txt', 'r', 0)
-	my_output = open('output.txt', 'w+')
-	my_test_ans = open('output2.txt', 'r')
-	k='test_cases.txt'
+	if file_ext == 'java':
+        pre = subprocess.Popen(['javac', file_path])
+        pre.wait()
 
-	p = subprocess.Popen(
-		['python', 'compile_python.py'],
-		stdin=my_input, 
-		stdout=my_output)
+        p = subprocess.Popen(
+            ['java', exec_name],
+            stdin=test_input, 
+            stdout=user_file_output
+        )
+    elif file_ext == 'cs':
+        pre = subprocess.Popen(['mcs', file_name])
+        pre.wait()
+
+        p = subprocess.Popen(
+            ['mono', exec_name+'.exe'],
+            stdin=test_input, 
+            stdout=user_file_output
+        )
 	t = threading.Timer( 10.0, timeout, [p] )
 	t.start()
 	#p.join()

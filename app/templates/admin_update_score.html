@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h3><u>Manually Edit Team Scores</u></h3>
+    <form class="form" action="" method="post" name="update_scores">
+        {{form.hidden_tag()}}
+        <div class="control-group{% if form.errors.teamname %} error{% endif %}">
+            <div class="controls">
+                {{form.teamname(size=30, class = "span3", placeholder="Team Name")}}<br>
+                {% for error in form.errors.teamname %}
+                <span class="help-inline">{{error}}</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group{% if form.errors.problem_number %} error{% endif %}">
+            <div class="controls">
+                {{form.problem_number(size=30, class = "span3", placeholder="Problem Number")}}<br>
+                {% for error in form.errors.problem_number %}
+                <span class="help-inline">{{error}}</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group{% if form.errors.status %} error{% endif %}">
+            <div class="controls">
+                {{form.status(size=30, class = "span3", placeholder="New Status")}}<br>
+                {% for error in form.errors.status %}
+                <span class="help-inline">{{error}}</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group form-inline">
+            <input class="btn btn-primary" type="submit" value="Update User">
+        </div>
+    </form>
+<div>
+
+
+{% endblock %}
