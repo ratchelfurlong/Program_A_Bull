@@ -247,6 +247,8 @@ def admin_update_score():
                                 if file_name == wanted_file_name:
                                     os.remove(os.path.join(file_path_user_folder, wanted_file_name))
                                     break
+
+                        flash("Team: "+user.username+" score updated for Problem: "+prob_num+".")
                     else:
                         form.status.errors.append("Invalid Status Update!")
                 else:
