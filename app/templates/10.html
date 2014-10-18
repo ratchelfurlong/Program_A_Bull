@@ -76,6 +76,12 @@
 	<h4><u>Upload Submission</u></h4>
 	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
+        <div class="control-group {% if form.errors.confirm %} error {% endif %}">
+			{{ form.recaptcha }}
+			{% for error in form.errors.recaptcha %}
+            <span class="help-inline">{{error}}</span><br>
+            {% endfor %}
+		</div>
         <div class="control-group">
         	{{ form.upload }}
             <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		

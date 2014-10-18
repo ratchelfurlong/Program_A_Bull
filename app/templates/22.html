@@ -40,6 +40,9 @@
         {{ form.hidden_tag() }}
         <div class="control-group {% if form.errors.confirm %} error {% endif %}">
 			{{ form.recaptcha }}
+			{% for error in form.errors.recaptcha %}
+            <span class="help-inline">{{error}}</span><br>
+            {% endfor %}
 		</div>
         <div class="control-group">
         	{{ form.upload }}
