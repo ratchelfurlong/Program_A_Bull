@@ -1,1 +1,57 @@
-30
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem 30</u></h2>
+	<div>
+
+		<h1>LEVEL OF DIFFICULTY: Hard</h1>
+
+		<h4><u>Description:</u></h4>
+		<p>
+			Find the determinate of a <b>n</b>x<b>n</b> matrix. Inputs will be separated by "#".<br/><br/>
+		</p>
+		
+		<p>
+			The determinate of a matrix can be found by Laplace Expansion, which is as follows:<br/>
+			If A = [ a<sub>ij</sub> ] is an n x n matrix, then the determinant of the (n-1) x (n-1) matrix that remains once the row and column containing the entry a<sub>ij</sub> are deleted is called the a<sub>ij</sub>minor. If the a<sub>ij</sub>minor is multiplied by (-1)<sup>i+j</sup>, the result is called the a<sub>ij</sub>cofactor.<br/>
+			Thus, the determinant of a matrix is the sum of the products of the entries in the first row and their cofactors. See the images below for further clarification.<br/>
+			<br/><img src="30_img1.gif" ><br/>
+			<br/><img src="30_img2.gif" ><br/>
+			<br/><img src="30_img3.gif" ><br/>
+			<br/>
+			A 2x2 matrix can be solved as follows:<br/>
+			<br/><img src="30_img4.gif" ><br/>			
+		</p>
+
+		<h5><u>Sample Input:</u></h5>
+		<p>
+			2 -1 -1<br/>
+			-3 2 1<br/>
+			5 0 -2<br/>
+			#<br/>
+			2 -1<br/>
+			-3 1
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		<p>
+			3<br/>
+			-1
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}
