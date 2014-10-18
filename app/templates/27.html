@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem 27</u></h2>
+	<div>
+
+		<h4>Problem Difficulty: Hard</h4>
+
+		<h4><u>Description:</u></h4>
+		<p>
+			A group therapy session for antisocial people is about to occur, but none of the participants want to sit next to another person. They also dread sitting opposite the group therapist and will try to sit anywhere else (including sitting next to another participant). Find a sitting configuration that allows for the most space between participants.<br>
+			Assume the chairs are set up in a circle, with one chair belonging to the group therapist.
+		</p>
+		
+		<p>
+			You will be given the number of chairs in the room, the number of participants, and the position of the group therapist. Output the chair numbers which are not filled.<br>
+			You can assume that the number of participants will never exceed the number of chairs (minus one for the therapist).
+		</p><br>
+
+		<h5><u>Sample Input:</u></h5>
+		<p>
+		6 0 5<br>
+		12 10 12<br>
+		11 8 1
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		<p>
+		1 2 3 4 6<br>
+		6<br>
+		6 7
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group {% if form.errors.confirm %} error {% endif %}">
+			{{ form.recaptcha }}
+		</div>
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}
