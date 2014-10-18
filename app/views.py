@@ -6,7 +6,7 @@ from app.models import User, ROLE_USER, ROLE_ADMIN, UserFile
 from config import ALLOWED_EXTENSIONS, UPLOAD_FOLDER, MAX_CONTENT_LENGTH, SOLUTION_TESTS_FOLDER
 from datetime import datetime
 from werkzeug import secure_filename
-import os, subprocess, time, threading, errno
+import os, subprocess, time, threading, errno, shutil
 
 @login_manager.user_loader
 def load_user(id):
@@ -125,8 +125,7 @@ def upload(problem_num):
 
             file_path_cs_java = os.path.join(
                 UPLOAD_FOLDER,
-                "cs_java_files_to_grade",
-                file_name
+                "cs_java_files_to_grade"
             )
 
             # if file exists, report it's still waiting to be graded
@@ -149,7 +148,7 @@ def upload(problem_num):
                         os.remove(file_path_user_folder)
                 # if java or cs file, save to cs_java folder to await manual grading
                 else:
-                    file_data.save(file_path_cs_java)
+                    copyanything(file_path_user_folder, file_path_cs_java)
 
                 flash("File " + file_name + " uploaded successfully!")
                 return redirect(url_for('index'))
@@ -295,3 +294,11 @@ def timeout(p):
         except OSError as e:
             if e.errno != errno.ESRCH:
                 raise
+
+def copyanything(src, dst):
+    try:
+        shutil.copytree(src, dst)
+    except OSError as exc: # python >2.5
+        if exc.errno == errno.ENOTDIR:
+            shutil.copy(src, dst)
+        else: raise
