@@ -27,7 +27,6 @@ def internal_error(error):
     return render_template('500.html'), 500
 
 
-
 @app.route('/')
 @app.route('/register' , methods=['GET','POST'])
 def register():
