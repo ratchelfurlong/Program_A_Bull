@@ -22,7 +22,7 @@ Fizz
 22
 23
 Fizz
-25
+Buzz
 26
 Fizz
 28
@@ -32,7 +32,7 @@ Fizz Buzz
 32
 Fizz
 34
-35
+Buzz
 Fizz
 37
 38
