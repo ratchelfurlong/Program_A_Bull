@@ -1,1 +1,86 @@
-10
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html' %}
+
+<div class="well">
+    <h2><u>Problem 10</u></h2>
+	<div>
+
+		<h1>LEVEL OF DIFFICULTY: Easy</h1>
+
+		<h4><u>Description:</u></h4>
+		<p>
+			A very small rural library has only one shelf dedicated to reserve books. (Reserve books are deemed important to a large number of library users and can therefore be checked out only for very short periods of time.)<br/>
+			When the library’s staff places a book on reserve, the book is put on the reserve shelf’s left end.<br/>
+			All books that were already on the reserve shelf must therefore be moved to the right, just enough to make room for the new book on the shelf.<br/>
+			When a reserve book is checked out and subsequently returned, it is also put on the reserve shelf’s left end, as if it were just being placed on reserve.<br/>
+			When a book is placed on reserve, or when a previously checked out reserve book is returned, and there is not enough room on the reserve bookshelf, then, starting at the right end, as many books (but no more) are removed from the reserve shelf (they are “taken off reserve”) as needed in order to make room for the book to be put on the reserve bookshelf.
+		</p>
+		
+		<p>
+			You will be given the size of the shelf (represented by an integer) and a series of commands. Assume no books are on the shelf to begin with. If given the command "ADD-BOOKNAME-SIZE" or "RETURN-BOOKNAME", add the given book to the shelf. If given the command "CHECKOUT-BOOKNAME", remove that book from the shelf. If given the command "PRINT", output the current state of the shelf (with the book name and size)
+		</p>
+
+		<h5><u>Sample Input:</u></h5>
+		<p>
+			250<br/>
+			PRINT<br/>
+			ADD-101 Uses for Wax Paper-38<br/>
+			ADD-Thin Thighs in 30 Days-63<br/>
+			ADD-The Republic-44<br/>
+			ADD-Mein Kampf-101<br/>
+			PRINT<br/>
+			ADD-Principia Mathematica-79<br/>
+			PRINT<br/>
+			CHECKOUT-The Republic<br/>
+			ADD-On the Origin of Species-55<br/>
+			ADD-The C Programming Language-15<br/>
+			PRINT<br/>
+			RETURN-The Republic<br/>
+			ADD-101 Uses for Wax Paper-38<br/>
+			CHECKOUT-The C Programming Language<br/>
+			PRINT<br/>
+		</p>
+
+		<h5><u>Sample Output:</u></h5>
+		<p>
+			AVAILABLE SHELF SPACE: 250<br/>
+			<br/>
+			Mein Kampf 101<br/>
+			The Republic 44<br/>
+			Thin Thighs in 30 Days 63<br/>
+			101 Uses for Wax Paper 38<br/>
+			AVAILABLE SHELF SPACE: 4<br/>
+			<br/>
+			Principia Mathematica 79<br/>
+			Mein Kampf 101<br/>
+			The Republic 44<br/>
+			AVAILABLE SHELF SPACE: 26<br/>
+			<br/>
+			The C Programming Language 15<br/>
+			On the Origin of Species 55<br/>
+			Principia Mathematica 79<br/>
+			Mein Kampf 101<br/>
+			AVAILABLE SHELF SPACE: 0<br/>
+			<br/>
+			101 Uses for Wax Paper 38<br/>
+			The Republic 44<br/>
+			On the Origin of Species 55<br/>
+			Principia Mathematica 79<br/>
+			AVAILABLE SHELF SPACE: 34<br/>
+		</p>
+	</div>
+</div>
+
+<div class="well">
+	<h4><u>Upload Submission</u></h4>
+	<form class="form-inline" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+        	{{ form.upload }}
+            <input id="submit_button" type="submit" class="btn btn-success" value="Upload">		
+        </div>
+    </form>
+</div>
+
+{% endblock %}
