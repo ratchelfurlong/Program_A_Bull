@@ -1,61 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
 {% include 'flash.html' %}
-
 <div class="well">
-    <h2><u>Problem 28</u></h2>
+	<h2><u>Problem 29</u></h2>
 	<div>
 
 		<h4>Problem Difficulty: Hard</h4>
 
 		<h4><u>Description:</u></h4>
 		<p>
-			A little turtle is trying to walk along the perimeter of a pond. Given a grid representing the pond (pond is represented by "O"), generate the perimeter string “4-2-2-2-3-2-2-2-2-5” which represents the numbers of pixels of the external (horizontal and vertical) edges of the pond as the turtle moves clockwise.
+			Madhan is a PhD student trying to figure out his H-index. An H-index is defined as an index that attempts to measure both the productivity and impact of the published work of a scientist or scholar. Given the number of papers written by Madhan and the number of other papers which cite his work, the H-index will be the maximun <b>n</b> such that: Madhan has <b>n</b> papers with at least <b>n</b> citations. Madhan is impatient and wants his H-index as fast as possible, so solve this problem in linear time.
+		</p>
+		
+		<p>
+			You will be given a sequence of integers representing the number of citations for each of Madhan's papers. Output the H-index (as an integer). You will only receive full points if you can output the correct H-index in linear time. If the program takes more than linear time but still gives the correct H-index, you will receive half points. The end of inputs and outputs our denoted by -1.
+		</p>
+		
+		<h5><u>Sample Input:</u></h5>
+		<p>
+			5
+			3
+			2
+			3
+			4
+			-1
 		</p>
 
+		<h5><u>Sample Output:</u></h5>
 		<p>
-			The turtle will start at the "." directly above the top-most "O" in the left-most column where there exists an "O", walk clockwise around the pond, and stop at the "." it started at.<br/>
-			You can assume that the grid will always be 10x10. Only find the perimeter of a pond that the turtle is currently at, do not find the perimeter of another pond is they are not connected by an "O" (See Sample Input/Output 2).
-		</p><br>
-		
-		<h5><u>Sample Input 1:</u></h5>
-		<p>
-			..........</br>
-			..OOO.....</br>
-			..OOOOOO..</br>
-			......OO..</br>
-			.....OOO..</br>
-			....OOOO..</br>
-			...OOOOO..</br>
-			...OOOO...</br>
-			...O......</br>
-			..........
-		</p>
-
-		<h5><u>Sample Output 1:</u></h5>
-		
-		<p>
-			4-2-4-7-2-2-4-2-3-5-2-2-2-2-2-1-5-4-2
-		</p>
-		
-		<h5><u>Sample Input 2:</u></h5>
-		<p>
-			..........</br>
-			..OOOO....</br>
-			..OO......</br>
-			..........</br>
-			..........</br>
-			....OOOO..</br>
-			....OOOO...</br>
-			...OOOO...</br>
-			...OOO....</br>
-			..........
-		</p>
-
-		<h5><u>Sample Output 2:</u></h5>
-		
-		<p>
-			5-3-3-2-4-4-2
+			3
+			-1
 		</p>
 	</div>
 </div>
