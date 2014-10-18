@@ -4,7 +4,7 @@
 
 <div class="well">
     <h3><u>Manually Edit Team Scores</u></h3>
-    <form class="form" action="" method="post" name="update_scores">
+    <form class="form" action="/admin_update_score" method="post" name="update_scores">
         {{form.hidden_tag()}}
         <div class="control-group{% if form.errors.teamname %} error{% endif %}">
             <div class="controls">

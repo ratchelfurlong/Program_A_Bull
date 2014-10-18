@@ -211,7 +211,7 @@ def grade_submission(user, file_path, file_name, problem_num):
 
     return checkAns(user_file_output.readlines(), test_output.readlines())
 
-@app.route('/admin_update_score')
+@app.route('/admin_update_score', methods = ['GET', 'POST'])
 @login_required
 def admin_update_score():
     user = g.user
@@ -231,14 +231,14 @@ def admin_update_score():
             )   
 
             if user:
-                if prob_num in allowed_problem_nums:
+                if int(prob_num) in allowed_problem_nums:
                     if new_status in allowed_statuses:
 
                         #changes problem status to desired value
-                        update_file_status(user, prob_num, status)
+                        update_file_status(user, prob_num, new_status)
 
                         if new_status == "Solved":
-                            update_score(user, prob_num)
+                            update_score(user, int(prob_num))
                         elif new_status == "Failed":
                             # if failed, removes file from user folder
                             for user_file in os.listdir(file_path_user_folder):
