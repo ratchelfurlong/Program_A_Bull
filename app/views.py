@@ -149,15 +149,10 @@ def upload(problem_num):
                         os.remove(file_path_user_folder)
                 # if java or cs file or cpp, save to cs_java folder to await manual grading
                 else:
-<<<<<<< HEAD
+
                 """
                 copyanything(file_path_user_folder, file_path_cs_java)
-<<<<<<< HEAD
-=======
-                    copyanything(file_path_user_folder, file_path_cs_java)
->>>>>>> 9773e425d9837869abf027c63a6c5b29182d8141
-=======
->>>>>>> d82c9c6202a6a3506ac73187d848ae13687cc978
+
 
                 flash("File " + file_name + " uploaded successfully!")
                 return redirect(url_for('index'))
