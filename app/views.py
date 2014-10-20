@@ -136,8 +136,10 @@ def upload(problem_num):
                 # changes file status
                 user.files[int(problem_num)-1].status = "Submitted"
                 db.session.commit()
+    
+                """ THIS SECTION NEEDS WORK:
+                    MAKE IT AUTO GRADE!
 
-                """
                 file_ext = file_name.split('.')[1]
                 # if file is cpp or python, auto grade
                 if file_ext == 'py':
@@ -151,6 +153,7 @@ def upload(problem_num):
                 else:
 
                 """
+                # right now it just dumps the file into a folder to be manually graded
                 copyanything(file_path_user_folder, file_path_cs_java)
 
 
