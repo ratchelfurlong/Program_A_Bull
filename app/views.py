@@ -40,19 +40,19 @@ def register():
         if new_user is None:
             user = User(form.username.data, form.password.data)
 
-            # makes directory to store files on 
+            # makes directory to store files on
             directory = os.path.join(app.config['UPLOAD_FOLDER'], 'Teams', form.username.data)
             if not os.path.exists(directory):
-                os.makedirs(directory) 
+                os.makedirs(directory)
 
             db.session.add(user)
 
             # creates UserFile objects to represent team submissions
             for i in range(30):
                 user_file = UserFile(
-                    problem_number=i+1, 
+                    problem_number=i+1,
                     status="Not Submitted",
-                    timestamp = datetime.utcnow(), 
+                    timestamp = datetime.utcnow(),
                     team = user)
                 db.session.add(user_file)
 
@@ -121,7 +121,7 @@ def upload(problem_num):
                 "Teams",
                 user.username,
                 file_name
-            )   
+            )
 
             file_path_cs_java = os.path.join(
                 UPLOAD_FOLDER,
@@ -131,24 +131,27 @@ def upload(problem_num):
             # if file exists, report it's still waiting to be graded
             if not os.path.isfile(file_path_user_folder):
                 # saves file to folder, will delete if test failed
-                file_data.save(file_path_user_folder)              
+                file_data.save(file_path_user_folder)
 
                 # changes file status
                 user.files[int(problem_num)-1].status = "Submitted"
                 db.session.commit()
 
+                """
                 file_ext = file_name.split('.')[1]
                 # if file is cpp or python, auto grade
-                if file_ext in ['py', 'cpp']:
+                if file_ext == 'py':
                     if grade_submission(user, file_path_user_folder, file_name, problem_num):
                         update_file_status(user, problem_num, "Solved")
                         update_score(user, int(problem_num))
                     else:
                         update_file_status(user, problem_num, "Failed")
                         os.remove(file_path_user_folder)
-                # if java or cs file, save to cs_java folder to await manual grading
+                # if java or cs file or cpp, save to cs_java folder to await manual grading
                 else:
-                    copyanything(file_path_user_folder, file_path_cs_java)
+<<<<<<< HEAD
+                """
+                copyanything(file_path_user_folder, file_path_cs_java)
 
                 flash("File " + file_name + " uploaded successfully!")
                 return redirect(url_for('index'))
@@ -186,18 +189,10 @@ def grade_submission(user, file_path, file_name, problem_num):
     file_ext = file_name.split('.')[1] # get the file extension
     exec_name = file_name.split('.')[0]
 
-    if file_ext == 'cpp':
-        pre = subprocess.Popen(['g++', file_path, '-o', exec_name])
-        pre.wait()
-        p = subprocess.Popen(
-            ['./'+exec_name],
-            stdin=test_input, 
-            stdout=user_file_output
-        )
-    elif file_ext == 'py':
+    if file_ext == 'py':
         p = subprocess.Popen(
             ['python', file_path],
-            stdin=test_input, 
+            stdin=test_input,
             stdout=user_file_output
         )
 
@@ -210,6 +205,8 @@ def grade_submission(user, file_path, file_name, problem_num):
 
     return checkAns(user_file_output.readlines(), test_output.readlines())
 
+
+
 @app.route('/admin_update_score', methods = ['GET', 'POST'])
 @login_required
 def admin_update_score():
@@ -217,7 +214,7 @@ def admin_update_score():
     allowed_statuses = ["Solved", "Failed"]
     allowed_problem_nums = range(1,31)
     form = EditUserScoreForm()
-    if user.role:
+    if user.role == 1:
         if form.validate_on_submit():
             user = User.query.filter_by(username=form.teamname.data).first()
             prob_num = form.problem_number.data
@@ -227,9 +224,9 @@ def admin_update_score():
                 app.config['UPLOAD_FOLDER'],
                 "Teams",
                 user.username
-            )   
+            )
 
-            if user:
+            if user != None:
                 if int(prob_num) in allowed_problem_nums:
                     if new_status in allowed_statuses:
 
@@ -241,13 +238,14 @@ def admin_update_score():
                         elif new_status == "Failed":
                             # if failed, removes file from user folder
                             for user_file in os.listdir(file_path_user_folder):
+                                file_ext = user_file.split('.')[1]
                                 current_file_name = user_file.split('.')[0]
                                 wanted_file_name = user.username+'_'+prob_num
-                                if file_name == wanted_file_name:
-                                    os.remove(os.path.join(file_path_user_folder, wanted_file_name))
+                                if current_file_name == wanted_file_name:
+                                    os.remove(os.path.join(file_path_user_folder, wanted_file_name+'.'+file_ext))
                                     break
 
-                        flash("Team: "+user.username+" score updated for Problem: "+prob_num+".")
+                        flash("Team "+user.username+" problem num "+prob_num+" updated to "+new_status)
                     else:
                         form.status.errors.append("Invalid Status Update!")
                 else:
@@ -281,8 +279,11 @@ def update_score(user, problem_num):
     db.session.commit()
 
 def checkAns(user_file_output, test_output):
-    for l, line in enumerate(user_file_output):
-        if test_output[l] != line:
+    for l, line in enumerate(test_output):
+        if l < len(user_file_output):
+            if user_file_output[l].strip() != line.strip():
+                return False
+        else:
             return False
     return True
 
